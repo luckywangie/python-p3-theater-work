@@ -15,7 +15,7 @@ class Audition(Base):
     id = Column(Integer, primary_key=True)
     actor = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    phone = Column(Integer)
+    phone = Column(Integer, nullable=True)  # Added nullable=True for validation
     hired = Column(Boolean, default=False)
     role_id = Column(Integer, ForeignKey('roles.id'))
 
@@ -38,7 +38,7 @@ class Role(Base):
     def locations(self):
         return [audition.location for audition in self.auditions]
 
-    def lead(self):
+    def lead(self):  
         hired_auditions = [audition for audition in self.auditions if audition.hired]
         return hired_auditions[0] if hired_auditions else 'no actor has been hired for this role'
 
